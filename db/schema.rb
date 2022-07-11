@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_07_223358) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_07_222802) do
   create_table "games", force: :cascade do |t|
+    t.integer "word_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "word_id", null: false
     t.index ["word_id"], name: "index_games_on_word_id"
   end
 
   create_table "guesses", force: :cascade do |t|
     t.string "body"
+    t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "game_id", null: false
     t.index ["game_id"], name: "index_guesses_on_game_id"
   end
 
