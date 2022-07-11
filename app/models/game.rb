@@ -1,6 +1,6 @@
 class Game < ApplicationRecord
-  has_one :word
+  belongs_to :word
   has_many :guesses
 
-
+  validates :word, presence: true
 end
