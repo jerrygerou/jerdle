@@ -1,24 +1,11 @@
-# README
+# JERDLE
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a recreation similar to the game of Wordle, but written by Jerry.
 
-Things you may want to cover:
+## Game Rules:
 
-* Ruby version
 
-* System dependencies
+## Setup:
 
-* Configuration
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Running Tests:
