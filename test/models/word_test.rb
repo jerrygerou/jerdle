@@ -13,10 +13,14 @@ class WordTest < ActiveSupport::TestCase
 
     assert_equal false, word.valid?
     assert_equal false, word_two.valid?
+    assert_equal word.errors.messages, {:body=>["is the wrong length (should be 5 characters)"]}
+    assert_equal word_two.errors.messages, {:body=>["is the wrong length (should be 5 characters)"]}
   end
 
   test "word will create if body exists and has length equal to 5" do
     word = Word.create(body: "mambo")
+
     assert word.valid?
+    assert_equal word.errors.messages, {}
   end
 end
