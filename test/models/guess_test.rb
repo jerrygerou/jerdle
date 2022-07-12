@@ -55,8 +55,8 @@ class GuessTest < ActiveSupport::TestCase
     guess = Guess.create(game: game, body: "label")
     guess2 = Guess.create(game: game, body: "chart")
 
-    assert_equal guess.guess_response, "_A_EL"
-    assert_equal guess2.guess_response, "C_a__"
+    assert_equal "_A_EL", guess.guess_response
+    assert_equal "C_a__", guess2.guess_response
   end
 
   test "#matching_letters returns a hash of matching letters, minus matching indexes" do
@@ -79,11 +79,11 @@ class GuessTest < ActiveSupport::TestCase
     assert_equal ({0=>"C"}), guess2.send(:matching_indexes)
   end
 
-  test "#combined_hash returns merged hashes" do
+  test "#matching_indexes_and_letters returns merged hashes" do
     word = Word.find_by(body: "camel")
     game = Game.create(word: word)
     guess = Guess.create(game: game, body: "chart")
 
-    assert_equal ({0=>"C", 2=>"a"}), guess.send(:combined_hash)
+    assert_equal ({0=>"C", 2=>"a"}), guess.send(:matching_indexes_and_letters)
   end
 end

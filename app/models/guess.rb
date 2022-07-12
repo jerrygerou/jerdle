@@ -15,6 +15,7 @@ class Guess < ApplicationRecord
     raise InvalidWordError, "Word does not exist" unless valid_guess?
 
     string_response = ""
+    combined_hash = matching_indexes_and_letters
     SPACES.each { |i| combined_hash[i] = "_" if combined_hash[i].nil?}
     combined_hash.keys.sort.each { |key| string_response += "#{combined_hash[key]}" }
     string_response
@@ -34,7 +35,7 @@ class Guess < ApplicationRecord
     body.downcase.split(//)
   end
 
-  def combined_hash
+  def matching_indexes_and_letters
     matching_indexes.merge(matching_letters)
   end
 
