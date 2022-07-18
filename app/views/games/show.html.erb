@@ -1,3 +1,16 @@
 <h1>Your Current Game</h1>
-<p> <%= @game.id %> </p>
-<p> <%= @game.word.body %> </p>
+<p> Game ID: <%= @game.id %> </p>
+<p> Word: <%= @game.word.body %> </p>
+
+<br>
+
+<h2>Guesses Remaining: <%= Guess::BEGINNING_GUESSES - @game.guesses.count %></h2>
+
+<%= form_for(Guess.new, url: { action: "create"}) do |form| %>
+  <br>
+    <%= form.label :new_guess %>
+    <br>
+    <%= form.text_field :body %>
+    <input name="game_id" type="hidden" value=<%= "#{@game.id}"%> >
+    <%= form.submit "Add Guess" %>
+<% end %>

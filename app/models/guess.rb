@@ -1,7 +1,10 @@
 class Guess < ApplicationRecord
-
   belongs_to :game
   has_one :word, through: :game
+
+  validates :body, presence: true, length: { is: 5 }
+
+  BEGINNING_GUESSES = 6
 
   class InvalidWordError < StandardError; end
 
