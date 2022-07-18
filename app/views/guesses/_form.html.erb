@@ -1,0 +1,12 @@
+<%= form_with model: @guess do |form| %>
+  <div>
+    <%= form.label :enter_your_guess %>
+    <br>
+    <%= form.text_field :body %>
+    <%= hidden_field_tag("game_id", params[@game.id]) %>
+  </div>
+  <br>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

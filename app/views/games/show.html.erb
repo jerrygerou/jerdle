@@ -1,3 +1,12 @@
 <h1>Your Current Game</h1>
 <p> <%= @game.id %> </p>
 <p> <%= @game.word.body %> </p>
+<p>Remaining Guesses: <%= Game::BEGINNING_GUESSES - @game.guesses.count %></p>
+
+<%= @game.guesses.each do |guess| %>
+  <p><%= guess.body %></p>
+<% end %>
+
+<br>
+
+<%= render partial: "guesses/form" %>

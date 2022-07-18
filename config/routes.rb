@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  # root "words#index"
-
-  get '/words', to: 'words#index'
-  get '/games/:id', to: 'games#show'
+  root "games#index"
+  resources :words, only: [:index, :show]
+  # resources :games, only: [:show, :create]
+  resources :games
+  resources :guesses
 end
