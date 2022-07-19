@@ -14,9 +14,9 @@ class GuessesController < ApplicationController
     @guess = Guess.new(guess_params)
 
     if @guess.save
-      redirect_to :'games/show', notice: "Guess successfully created."
+      redirect_to game_path(@guess.game, id: @guess.game.id), notice: "Guess successfully created."
     else
-      render :'games/show', notice: "Something went wrong."
+      render 'games/show', notice: "Something went wrong."
     end
   end
 

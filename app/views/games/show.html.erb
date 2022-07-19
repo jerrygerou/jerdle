@@ -6,11 +6,11 @@
 
 <h2>Guesses Remaining: <%= Guess::BEGINNING_GUESSES - @game.guesses.count %></h2>
 
-<%= form_for(Guess.new, url: { action: "create"}) do |form| %>
+<%= form_with model: @game.guesses, url: guesses_path, method: :post, local: true do |form| %>
   <br>
     <%= form.label :new_guess %>
     <br>
     <%= form.text_field :body %>
-    <input name="game_id" type="hidden" value=<%= "#{@game.id}"%> >
+    <%= form.hidden_field :game_id, value: @game.id %>
     <%= form.submit "Add Guess" %>
 <% end %>
