@@ -3,6 +3,12 @@
 <p> Word: <%= @game.word.body %> </p>
 
 <br>
+<%= flash[:notice] if flash[:notice] %>
+<% if @game.errors.full_messages.any? %>
+  <% @game.errors.full_messages.each do |error_message| %>
+    <%= error_message if @game.errors.full_messages.first == error_message %> <br />
+  <% end %>
+<% end %>
 
 <h2>Guesses Remaining: <%= Guess::BEGINNING_GUESSES - @game.guesses.count %></h2>
 

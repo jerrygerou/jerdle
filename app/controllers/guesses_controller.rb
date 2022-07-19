@@ -11,12 +11,13 @@ class GuessesController < ApplicationController
   end
 
   def create
+    @game = Game.find(guess_params[:game_id])
     @guess = Guess.new(guess_params)
 
     if @guess.save
-      redirect_to game_path(@guess.game, id: @guess.game.id), notice: "Guess successfully created."
+      redirect_to game_path(@guess.game), notice: "Successfully added a new guess"
     else
-      render 'games/show', notice: "Something went wrong."
+      redirect_to game_path(@guess.game), notice: "Something went wrong" + "#{@guess.errors.messages}"
     end
   end
 
