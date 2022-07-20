@@ -1,6 +1,5 @@
 <h1>Your Current Game</h1>
 <p> Game ID: <%= @game.id %> </p>
-<p> Word: <%= @game.word.body %> </p>
 
 <br>
 <%= flash[:notice] if flash[:notice] %>
@@ -12,11 +11,28 @@
 
 <h2>Guesses Remaining: <%= Guess::BEGINNING_GUESSES - @game.guesses.count %></h2>
 
-<%= form_with model: @game.guesses, url: guesses_path, method: :post, local: true do |form| %>
-  <br>
-    <%= form.label :new_guess %>
+<table style="width:30%">
+  <tr>
+    <th style="width:15%">Guess</th>
+    <th style="width:15%">Response String</th>
+  </tr>
+
+  <tbody>
+  <% @game.guesses.each do |guess| %>
+    <tr>
+      <td><%= guess.body %></td>
+      <td><%= guess.guess_response %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<% unless @game.game_over? %>
+  <%= form_with model: @game.guesses, url: guesses_path, method: :post, local: true do |form| %>
     <br>
-    <%= form.text_field :body %>
-    <%= form.hidden_field :game_id, value: @game.id %>
-    <%= form.submit "Add Guess" %>
+      <%= form.label :new_guess %>
+      <br>
+      <%= form.text_field :body %>
+      <%= form.hidden_field :game_id, value: @game.id %>
+      <%= form.submit "Add Guess" %>
+  <% end %>
 <% end %>

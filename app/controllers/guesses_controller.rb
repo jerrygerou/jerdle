@@ -14,8 +14,16 @@ class GuessesController < ApplicationController
     @game = Game.find(guess_params[:game_id])
     @guess = Guess.new(guess_params)
 
-    if @guess.save
-      redirect_to game_path(@guess.game), notice: "Successfully added a new guess"
+    if @guess.save && !@guess.is_correct?
+      if @game.game_over?
+        @game.update(game_over: true)
+        redirect_to game_path(@guess.game), notice: "You're out of guesses! Game over!"
+      else
+        redirect_to game_path(@guess.game), notice: "Successfully added a new guess"
+      end
+    elsif @guess.save && @guess.is_correct?
+      @game.update(game_over: true)
+      redirect_to game_path(@guess.game), notice: "You win! Game over!"
     else
       redirect_to game_path(@guess.game), notice: "Something went wrong" + "#{@guess.errors.messages}"
     end

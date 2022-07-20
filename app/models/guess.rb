@@ -3,6 +3,8 @@ class Guess < ApplicationRecord
   has_one :word, through: :game
 
   validates :body, presence: true, length: { is: 5 }
+  validate :valid_guess?
+  validate :more_guesses_available?
 
   BEGINNING_GUESSES = 6
 
@@ -10,13 +12,7 @@ class Guess < ApplicationRecord
 
   SPACES = (0..4).to_a
 
-  def is_correct?
-    word.body.downcase.match?(body.downcase)
-  end
-
   def guess_response
-    raise InvalidWordError, "Word does not exist" unless valid_guess?
-
     string_response = ""
     combined_hash = matching_indexes_and_letters
     SPACES.each { |i| combined_hash[i] = "_" if combined_hash[i].nil?}
@@ -24,10 +20,24 @@ class Guess < ApplicationRecord
     string_response
   end
 
+  def is_correct?
+    word.body.downcase.match?(body.downcase)
+  end
+
   private
 
+  def more_guesses_available?
+    game = Game.find(game_id)
+    guesses_count = game.guesses.count
+    if guesses_count >= BEGINNING_GUESSES
+      errors.add(:game_over, "Out of guesses! You lose!")
+    end
+  end
+
   def valid_guess?
-    Word.find_by(body: body).present?
+    unless Word.find_by(body: body).present?
+      errors.add(:invalid_word, "Word does not exist in dictionary")
+    end
   end
 
   def word_body_array
