@@ -4,7 +4,6 @@ class Guess < ApplicationRecord
 
   validates :body, presence: true, length: { is: 5 }
   validate :valid_guess?
-  validate :more_guesses_available?
 
   BEGINNING_GUESSES = 6
 
@@ -25,14 +24,6 @@ class Guess < ApplicationRecord
   end
 
   private
-
-  def more_guesses_available?
-    game = Game.find(game_id)
-    guesses_count = game.guesses.count
-    if guesses_count >= BEGINNING_GUESSES
-      errors.add(:game_over, "Out of guesses! You lose!")
-    end
-  end
 
   def valid_guess?
     unless Word.find_by(body: body).present?
