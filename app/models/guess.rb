@@ -36,7 +36,7 @@ class Guess < ApplicationRecord
 
   def valid_guess?
     unless Word.find_by(body: body).present?
-      errors.add(:invalid_word, "Word does not exist in dictionary")
+      errors.add(:invalid_word, "Word does not exist in word list")
     end
   end
 

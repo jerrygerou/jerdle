@@ -1,7 +1,19 @@
 <h1>Your Current Game</h1>
-<p> Game ID: <%= @game.id %> </p>
 
-<br>
+<h4>Directions:</h4>
+<p>Guess the WORDLE in six tries.
+  <br>
+  Each guess must be a valid five-letter word.
+  <br>
+  After each guess, the guess result will show you which letters you guessed.
+  <br>
+  Lower case letters indicate you guessed a correct letter in the wrong space.
+  <br>
+  Upper case letters indicate you guessed the correct letter in the correct space.
+  <br>
+  Blanks mean that letter does not appear in the word.
+</p>
+
 <%= flash[:notice] if flash[:notice] %>
 <% if @game.errors.full_messages.any? %>
   <% @game.errors.full_messages.each do |error_message| %>
@@ -14,7 +26,7 @@
 <table style="width:30%">
   <tr>
     <th style="width:15%">Guess</th>
-    <th style="width:15%">Response String</th>
+    <th style="width:15%">Guess Result</th>
   </tr>
 
   <tbody>
@@ -26,13 +38,29 @@
   <% end %>
   </tbody>
 </table>
-<% unless @game.game_over? %>
-  <%= form_with model: @game.guesses, url: guesses_path, method: :post, local: true do |form| %>
-    <br>
+<% unless @game.guesses.count == Guess::BEGINNING_GUESSES || @game.game_won? %>
+  <div>
+    <%= form_with model: @game.guesses, url: guesses_path, method: :post, local: true do |form| %>
+      <br>
       <%= form.label :new_guess %>
       <br>
       <%= form.text_field :body %>
       <%= form.hidden_field :game_id, value: @game.id %>
       <%= form.submit "Add Guess" %>
-  <% end %>
+    <% end %>
+  </div>
+<% end %>
+<br>
+<% if @game.game_won? %>
+  <h3>Congrats! You won!</h3>
+  <h4>The word was: <%= @game.word.body %></h4>
+<% end %>
+
+<% if !@game.game_won? && @game.guesses.count == Guess::BEGINNING_GUESSES %>
+  <h3>Better luck next time...</h3>
+  <h4>The word was: <%= @game.word.body %></h4>
+<% end %>
+
+<% if @game.guesses.count == Guess::BEGINNING_GUESSES || @game.game_won? %>
+  <%= button_to "START NEW GAME", action: "create", method: "post" %>
 <% end %>
