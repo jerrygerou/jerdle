@@ -16,6 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_07_222802) do
 
   create_table "games", force: :cascade do |t|
     t.bigint "word_id"
+    t.boolean "game_over", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["word_id"], name: "index_games_on_word_id"
