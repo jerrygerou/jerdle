@@ -5,6 +5,14 @@ class Game < ApplicationRecord
 
   validates :word, presence: true
 
+  def game_won?
+    if guesses.present?
+      guesses.last.body.match?(word.body)
+    else
+      false
+    end
+  end
+
   def game_over?
     if guesses.count >= Guess::BEGINNING_GUESSES
     elsif guesses.map {|guess| word.body.match?(guess.body) }
