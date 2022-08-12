@@ -7,7 +7,7 @@ class Game < ApplicationRecord
 
   def game_won?
     if guesses.present?
-      guesses.last.body.match?(word.body)
+      guesses.last.body.downcase.match?(word.body.downcase)
     else
       false
     end
@@ -15,7 +15,7 @@ class Game < ApplicationRecord
 
   def game_over?
     if guesses.count >= Guess::BEGINNING_GUESSES
-    elsif guesses.map {|guess| word.body.match?(guess.body) }
+    elsif guesses.map {|guess| word.body.downcase.match?(guess.body.downcase) }
     else
       false
     end
