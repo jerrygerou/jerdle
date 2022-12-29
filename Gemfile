@@ -14,6 +14,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
 gem "redis", "~> 4.0"
+gem 'data_migrate'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
