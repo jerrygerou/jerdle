@@ -26,6 +26,6 @@ test:
 production:
   <<: *default
   #  database: db/production.sqlite3
-  database: wordle_production
-  username: wordle
+  database: jerdle-db
+  username: postgres
   password: <%= ENV['WORDLE_DATABASE_PASSWORD'] %>
